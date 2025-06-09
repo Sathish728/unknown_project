@@ -25,10 +25,10 @@ const login = async (req, res) => {
         }
 
         // Generate Token
-        const gmailtoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+        const gmailtoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
         const isProduction = process.env.NODE_ENV === "production";
-        res.cookie("token", token, {
+        res.cookie("token", youtubetoken, {
         httpOnly: true,
         secure: isProduction, // only secure in prod
         sameSite: isProduction ? "none" : "lax"
