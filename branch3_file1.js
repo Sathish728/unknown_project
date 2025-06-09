@@ -25,8 +25,8 @@ const login = async (req, res) => {
         }
 
         // Generate Token
-        const youtubetoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+        const gmailtoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
         const isProduction = process.env.NODE_ENV === "production";
         res.cookie("token", youtubetoken, {
         httpOnly: true,
@@ -39,5 +39,18 @@ const login = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+try{
+const verify_token=jwt.sign({userId: user._id},process.env.JWT_SECRET,{expiresIn:"365d"})
+const isProduction=process.env.NODE_ENV === "production";
+res.cookie("token",Verify_token,{
+    httpOnly:true,
+    secure:isProduction,
+    sameSite:isProction ? "none" : "lax"}).json({message:"user login successfully ",user})
+}catch{
+    console.error("Login Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+}
+
 
 module.exports = { login };
